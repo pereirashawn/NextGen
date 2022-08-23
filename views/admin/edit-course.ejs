@@ -1,0 +1,90 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/forms.css">
+    <link rel="stylesheet" href="/css/course.css">
+</head>
+
+<body>
+   <%- include('../includes/navbar.ejs') %>
+
+    <main>
+
+        <form class="course-form" action="/admin/<% if (editing) { %>edit-course<% } else { %>add-course<% } %>" method="POST" >
+            <div class="form-control">
+                <h2>
+                    <% if(editing) { %>
+                        Course Update
+                    <% } else { %>
+                        New Course
+                    <% } %>
+                </h2>
+            </div>
+            <!-- error message-->
+                <% if(errorMessage) { %>
+                    <div class='user-message user-message--error'>
+                        <%= errorMessage %>
+                    </div>
+                <% } %>
+            <!---->
+            
+            <div class="form-control">
+                <label for="name">Name</label>
+                <input 
+                    class="<%= validationErrors.find(el => el.param === 'name') ? 'invalid' : '' %>"
+                    type="text" 
+                    name="name" 
+                    id="name" 
+                    value="<% if (editing || hasErrors) { %><%= course.name %><% } %>">
+            </div>
+
+            <div class="form-control">
+                <label for="price">Price</label>
+                <input 
+                    class="<%= validationErrors.find(el => el.param === 'price') ? 'invalid' : '' %>"
+                    type="number" 
+                    name="price" 
+                    id="price" 
+                    value="<% if (editing || hasErrors) { %><%= course.price %><% } %>">
+            </div>
+
+            <div class="form-control">
+                <label for="description">Course Description</label>
+                <textarea 
+                    class="<%= validationErrors.find(el => el.param === 'description') ? 'invalid' : '' %>" 
+                    name="description" 
+                    id="description" 
+                    rows="5">
+                    <% if (editing || hasErrors) { %><%= course.description %><% } %>
+                </textarea>
+            </div>
+
+            <div class="form-control">
+                <label for="mentor">Course Mentor </label>
+                <select name="mentorId" required>
+                    <% for (const i in mentors) { %>
+                    <option 
+                        name="mentor"
+                        id="mentor"
+                        value="<%= mentors[i]._id %>"
+                    >
+                    <%= mentors[i].name %>
+                         
+                    </option>
+                    <% } %>
+                </select>
+            </div>
+
+            <% if(editing) { %>
+                <input type="hidden" value="<%= course._id %>" name="courseId">
+                
+            <% } %>
+            <input type="hidden" value="<%= csrfToken %>" name="_csrf">
+            <button class="btn" type="submit">
+                <% if (editing) { %>
+                    Update Course
+                <% } else { %>
+                    Add Course
+                <% } %>
+            </button>
+        </form>
+    </main>
+<%- include('../includes/foot.ejs') %>

@@ -1,0 +1,6 @@
+<form class='course__enroll' action="/admin/edit-course/<%= course._id%>?edit=true" method="POST">
+    <button class="cart-btn" type="submit">Edit Course</button>
+    <input type="hidden" name="courseId" value="<%= course._id %>" />
+    <input type="hidden" value="<%= csrfToken %>" name="_csrf" />
+  </form>
+  

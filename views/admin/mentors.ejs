@@ -1,0 +1,79 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/main.css" />
+    <link rel="stylesheet" href="/css/mentor.css" />
+</head>
+
+<body>
+
+    <%- include('../includes/navbar.ejs') %>
+
+    <main>
+        <% if(mentors.length > 0) { %>
+                <div class='grid'>
+                    <div class="add-mentor">
+                        <a class="btn add-mentor-btn"
+                           href="/admin/add-mentor">Add Mentor
+                        </a>
+                    </div>
+                    
+                    <% for(mentorItem of mentors) { %>
+                        <article class="card">  
+                            <div class="card__header">
+                            <h1 class="mentor__name"><%= mentorItem.name%></h1>
+                            </div>
+                            <div class="card__content">
+                                <div class="mentor__details">
+                                <p class="mentor__info">Email : <%= mentorItem.email%></p>
+                                <p class="mentor__info">Contact : <%= mentorItem.contact%></p>
+                                </div>
+                                <div class="card__actions">
+                                    <a 
+                                        class="btn mentor_edit_btn" 
+                                        href='/admin/edit-mentor/<%= mentorItem._id%>?edit=true'
+                                    >
+                                        Editttt
+                                    </a>
+                                    <form class='delete-mentor' action='/admin/delete-mentor' method="POST">
+                                        <input type="hidden" value="<%= mentorItem._id %>" name="mentorId">
+                                        <input type="hidden" value="<%= csrfToken %>" name="_csrf">
+                                        <button 
+                                            class="mentor_delete_btn"
+                                            id="button" 
+                                            type='submit' 
+                                        >
+                                            Delete
+                                        </button>
+                                    </form>
+                
+                                </div>
+                            </div>
+                            
+                            
+
+                        </article>
+                    <% } %>
+                </div>
+                <!-- PAGINATION LINKS-->
+                <%- include('../includes/pagination',{
+                    currentPage: currentPage,
+                    nextPage: nextPage,
+                    prevPage: prevPage,
+                    hasPrevPage: hasPrevPage,
+                    hasNextPage: hasNextPage,
+                    lastPage: lastPage
+                }) %>
+        <% } else { %> 
+            <div class="grid">
+                <h1>No Mentors Found</h1>
+                <div class="add-mentor">
+                    <a class="btn add-mentor-btn"
+                       href="/admin/add-mentor">Add Mentor
+                    </a>
+                </div>
+            </div>  
+            
+        <% } %>
+    </main>
+
+<%- include('../includes/foot.ejs') %>

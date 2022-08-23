@@ -1,0 +1,47 @@
+<%- include('../includes/head.ejs') %>
+  <link rel="stylesheet" href="/css/navbar.css">
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="/css/course.css" />
+</head>
+
+<body>
+  <%- include('../includes/navbar.ejs') %>
+
+  <main>
+    <% if(courses.length > 0) { %>
+     <div class="grid">
+
+      <% for (let courseItem of courses) { %>
+          <article class="card">  
+            <div class="card__header">
+              <h1 class="course__title"><%= courseItem.name%></h1>
+              <h2 class="course__price">&#x20B9; <%= courseItem.price%></h2>
+            </div>
+
+            <div class="card__content">
+            <div class="card__desc">
+              <p class="course__description">
+                <%= courseItem.description %>
+              </p>
+            </div>
+            
+            </div>
+
+          </article>
+      <% } %>
+    </div>
+    <!-- PAGINATION LINKS-->
+    <%- include('../includes/pagination',{
+        currentPage: currentPage,
+        nextPage: nextPage,
+        prevPage: prevPage,
+        hasPrevPage: hasPrevPage,
+        hasNextPage: hasNextPage,
+        lastPage: lastPage
+    }) %>
+    <% }else { %>
+      <h1>No Courses Found</h1>
+    <% } %>
+  </main>
+
+<%- include('../includes/foot.ejs') %>

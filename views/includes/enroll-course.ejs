@@ -1,0 +1,5 @@
+<form class='course__enroll' action="/my-courses" method="POST">
+  <button class="cart-btn" type="submit">Enroll</button>
+  <input type="hidden" name="courseId" value="<%= course._id %>" />
+  <input type="hidden" value="<%= csrfToken %>" name="_csrf" />
+</form>

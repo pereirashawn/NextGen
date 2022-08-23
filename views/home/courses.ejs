@@ -1,0 +1,118 @@
+<%- include('../includes/head.ejs') %>
+  <link rel="stylesheet" href="/css/navbar.css">
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="/css/course.css" />
+  <link rel="stylesheet" href="/css/forms.css" />
+</head>
+
+<body>
+  <%- include('../includes/navbar.ejs') %>
+
+  <main>
+    <% if(courses.length > 0) { %>
+     <div class="grid">
+      <% if(infoMessage) { %>
+        <div class='user-message user-message--info'>
+            <%= infoMessage %>
+        </div>
+    <% } %>
+      <% if(isAdmin) { %>
+        <div class="add-course">
+            <a class="btn add-course-btn"
+              href="/admin/add-course">
+              Add New Course
+            </a>
+        </div>
+      <% } %>
+
+      <% for (let courseItem of courses) { %>
+          <article class="card">  
+            <div class="card__header">
+              <h1 class="course__title"><%= courseItem.name%></h1>
+              <h2 class="course__price">&#x20B9; <%= courseItem.price%></h2>
+            </div>
+
+            <div class="card__content">
+            <div class="card__desc">
+              <p class="course__description">
+                <%= courseItem.description %>
+              </p>
+            </div>
+            <div class="card__actions">
+              
+                <% let contains =0 %>
+                <% if(isAuthenticated && !isAdmin) { %>
+
+                  <% for(let el of enrolledCourses) {%>
+                    <% if(courseItem._id.toString() === el.courseId._id.toString()) { %>
+
+                    <% contains =1 %>
+                    <% } %>
+                  
+                  <% } %>
+                  
+                  <% if (contains === 0) { %>
+                    <%- include('../includes/enroll-course',{
+                      course:courseItem
+                      }) 
+                    %>
+                  <% } else { %>
+                    <div class="course__enrolled">
+                      Enrolled
+                    </div>
+                  <% } %>
+                <% } %>
+                <% if(isAdmin) { %>
+
+                  <a 
+                  class="btn course-edit-btn" 
+                  href='/admin/edit-course/<%= courseItem._id%>?edit=true'
+                  >
+                    Edit Course
+                  </a>
+                  <form class='delete-course' action='/admin/delete-course' method="POST">
+                    <input type="hidden" value="<%= courseItem._id %>" name="courseId">
+                    <input type="hidden" value="<%= csrfToken %>" name="_csrf">
+                    <button 
+                        class="course_delete_btn"
+                        id="button" 
+                        type='submit' 
+                    >
+                        Delete
+                    </button>
+                </form>
+  
+                <% } %>
+              
+            </div>
+            </div>
+
+          </article>
+      <% } %>
+    </div>
+
+      <!-- PAGINATION LINKS-->
+      <%- include('../includes/pagination',{
+          currentPage: currentPage,
+          nextPage: nextPage,
+          prevPage: prevPage,
+          hasPrevPage: hasPrevPage,
+          hasNextPage: hasNextPage,
+          lastPage: lastPage
+      }) %>
+
+    <% }else { %>
+      <div class="grid">
+        <% if(infoMessage) { %>
+            <div class='user-message user-message--info'>
+                <%= infoMessage %>
+            </div>
+        <% } %>
+
+        <h1>No Courses Found</h1>
+      </div>
+      
+    <% } %>
+  </main>
+
+<%- include('../includes/foot.ejs') %>

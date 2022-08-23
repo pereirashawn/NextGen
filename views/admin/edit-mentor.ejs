@@ -1,0 +1,73 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/forms.css">
+    <link rel="stylesheet" href="/css/mentor.css">
+</head>
+
+<body>
+   <%- include('../includes/navbar.ejs') %>
+
+    <main>
+
+        <form class="mentor-form" action="/admin/<% if (editing) { %>edit-mentor<% } else { %>add-mentor<% } %>" method="POST" >
+            <div class="form-control">
+                <h2>
+                    <% if(editing) { %>
+                        Mentor Update
+                    <% } else { %>
+                        Mentor Registration
+                    <% } %>
+                </h2>
+            </div>
+            <!-- error message-->
+                <% if(errorMessage) { %>
+                    <div class='user-message user-message--error'>
+                        <%= errorMessage %>
+                    </div>
+                <% } %>
+            <!---->
+            
+            <div class="form-control">
+                <label for="name">Name</label>
+                <input 
+                    class="<%= validationErrors.find(el => el.param === 'name') ? 'invalid' : '' %>"
+                    type="text" 
+                    name="name" 
+                    id="name" 
+                    value="<% if (editing || hasErrors) { %><%= mentor.name %><% } %>">
+            </div>
+
+            <div class="form-control">
+                <label for="email">Email</label>
+                <input 
+                    class="<%= validationErrors.find(el => el.param === 'email') ? 'invalid' : '' %>"
+                    type="text" 
+                    name="email" 
+                    id="email" 
+                    value="<% if (editing || hasErrors) { %><%= mentor.email %><% } %>">
+            </div>
+
+            <div class="form-control">
+                <label for="contact">Contact</label>
+                <input 
+                    class="<%= validationErrors.find(el => el.param === 'contact') ? 'invalid' : '' %>"
+                    type="text" 
+                    name="contact" 
+                    id="contact" 
+                    value="<% if (editing || hasErrors) { %><%= mentor.contact %><% } %>">
+            </div>
+
+            <% if(editing) { %>
+                <input type="hidden" value="<%= mentor._id %>" name="mentorId">
+                
+            <% } %>
+            <input type="hidden" value="<%= csrfToken %>" name="_csrf">
+            <button class="btn" type="submit">
+                <% if (editing) { %>
+                    Update Mentor
+                <% } else { %>
+                    Add Mentor
+                <% } %>
+            </button>
+        </form>
+    </main>
+<%- include('../includes/foot.ejs') %>

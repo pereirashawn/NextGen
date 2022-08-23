@@ -1,0 +1,23 @@
+<a class="btn course__enroll" href='#'>
+  Enroll
+</a>
+
+<%= mentors[i]._id %>
+
+<% if(editing || hasErrors) { %>
+                                <%= course.mentorId.name %>
+                        <% } else { %>
+                            <%= mentors[i].name %>
+                        <% } %>
+
+Computer Fundamentals
+This course explains the foundational concepts of computer hardware, software, operating systems, peripherals, etc. along with how to get the most value and impact from computer technology.
+
+Introduction To Algorithms
+Explores a broad range of algorithms in depth, yet make their design and analysis accessible to all levels of learners. Each topic is relatively self-contained and can be used as a unit of study.
+
+System Design
+Learn the fundamentals of system design and dive deeper into Low-Level System Design and High-Level System Design
+
+Node JS
+Master Node JS & Deno.js, build REST APIs with Node.js, GraphQL APIs, add Authentication, use MongoDB, SQL & much more!

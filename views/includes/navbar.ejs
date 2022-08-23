@@ -1,0 +1,67 @@
+<header class="navbar-header">
+  <nav class="navbar-header__nav">
+    <ul class="navbar-header__items-list">
+      <li class="navbar-header__item">
+        <a class="<%= path === '/' ? 'active' : '' %>" href="/">Home</a>
+      </li>
+      <li class="navbar-header__item">
+        <a class="<%= path === '/courses' ? 'active' : '' %>" href="/courses"
+          >Courses</a
+        >
+      </li>
+
+      <% if(isAuthenticated) { %>
+      <li class="navbar-header__item">
+        <a
+          class="<%= path === '/my-courses' ? 'active' : '' %>"
+          href="/my-courses"
+          >My Courses</a
+        >
+      </li>
+      <% } %> <% if(isAdmin) { %>
+      <li class="navbar-header__item">
+        <a
+          class="<%= path === '/admin/mentors' ? 'active' : '' %>"
+          href="/admin/mentors"
+          >Mentors</a
+        >
+      </li>
+      <li class="navbar-header__item">
+        <a
+          class="<%= path === '/admin/users' ? 'active' : '' %>"
+          href="/admin/users"
+          >Users</a
+        >
+      </li>
+      <% } %>
+    </ul>
+
+    <ul class="navbar-header__items-list">
+      <% if(!isAuthenticated) { %>
+      <li class="navbar-header__item">
+        <a 
+          class="<%= path === '/signup' ? 'active' : '' %>"
+          href="/signup"
+        >
+          Signup
+        </a>
+      </li>
+      <li class="navbar-header__item">
+        <a 
+          class="<%= path === '/login' ? 'active' : '' %>"
+          href="/login"
+        >
+          Login
+        </a>
+      </li>
+      <% } %> <% if(isAuthenticated) {%>
+      <li class="navbar-header__item">
+        <a href="/"><%= name %></a>
+      </li>
+      <li class="navbar-header__item">
+        <a href="/logout">Logout</a>
+      </li>
+      <% } %>
+    </ul>
+  </nav>
+</header>
